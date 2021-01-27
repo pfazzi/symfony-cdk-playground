@@ -8,9 +8,12 @@ export class SymfonyHandler extends cdk.Construct {
     constructor(scope: constructs.Construct, id: string) {
         super(scope, id);
 
+        const name = 'symfony-demo-app';
+        const description = "This is just a test with CDK, PHP and Symfony.";
+
         const handler = new lambda.Function(this, "symfony-demo-app", {
-            functionName: 'symfony-demo-app',
-            description: "A demo Symfony app",
+            functionName: name,
+            description,
             runtime: lambda.Runtime.PROVIDED_AL2,
             layers: [
                 lambda.LayerVersion.fromLayerVersionArn(
@@ -25,9 +28,9 @@ export class SymfonyHandler extends cdk.Construct {
         });
 
         const api = new apigateway.LambdaRestApi(this, "symfony-demo-gateway", {
+            restApiName: name,
+            description,
             handler,
-            restApiName: 'symfony-demo-app',
-            description: "This service is just a test with CDK, PHP and Symfony."
         });
     }
 }
