@@ -17,8 +17,8 @@ export class Service extends core.Construct {
                 )
             ],
             code: lambda.Code.fromAsset(path.join(__dirname, '..', '..', 'dist')),
-            memorySize: 1024,
-            handler: 'index.php'
+            handler: 'public/index.php',
+            memorySize: 1024
         });
 
         const api = new apigateway.RestApi(this, "php-service-api", {
