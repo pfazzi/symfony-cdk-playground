@@ -1,14 +1,16 @@
-import {Construct} from "@aws-cdk/core";
+import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as constructs from "constructs";
 import * as path from "path";
 
-export class SymfonyHandler extends Construct {
+export class SymfonyHandler extends cdk.Construct {
     constructor(scope: constructs.Construct, id: string) {
         super(scope, id);
 
         const handler = new lambda.Function(this, "symfony-demo-app", {
+            functionName: 'symfony-demo-app',
+            description: "A demo Symfony app",
             runtime: lambda.Runtime.PROVIDED_AL2,
             layers: [
                 lambda.LayerVersion.fromLayerVersionArn(
@@ -23,8 +25,8 @@ export class SymfonyHandler extends Construct {
         });
 
         const api = new apigateway.RestApi(this, "symfony-demo-gateway", {
-            restApiName: "Symfony Demo Application",
-            description: "This service is just a test with CDK and PHP and Symfony."
+            restApiName: "symfony-demo-gateway",
+            description: "This service is just a test with CDK, PHP and Symfony."
         });
 
         const serviceFrontControllerHandler = new apigateway.LambdaIntegration(handler, {
