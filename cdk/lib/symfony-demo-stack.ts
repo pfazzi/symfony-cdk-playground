@@ -1,10 +1,10 @@
 import * as cdk from '@aws-cdk/core';
-import * as php_service from './service'
+import {SymfonyHandler} from "./symfony-handler";
 
-export class CdkStack extends cdk.Stack {
+export class SymfonyDemoStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new php_service.Service(this, 'PhpService');
+    new SymfonyHandler(this, 'symfony-demo');
   }
 }

@@ -1,13 +1,14 @@
-import * as core from "@aws-cdk/core";
-import * as apigateway from "@aws-cdk/aws-apigateway";
+import {Construct} from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
-import * as path from 'path';
+import * as apigateway from "@aws-cdk/aws-apigateway";
+import * as constructs from "constructs";
+import * as path from "path";
 
-export class Service extends core.Construct {
-    constructor(scope: core.Construct, id: string) {
+export class SymfonyHandler extends Construct {
+    constructor(scope: constructs.Construct, id: string) {
         super(scope, id);
 
-        const handler = new lambda.Function(this, "PhpServiceHandler", {
+        const handler = new lambda.Function(this, "symfony-demo-app", {
             runtime: lambda.Runtime.PROVIDED_AL2,
             layers: [
                 lambda.LayerVersion.fromLayerVersionArn(
@@ -21,9 +22,9 @@ export class Service extends core.Construct {
             memorySize: 1024
         });
 
-        const api = new apigateway.RestApi(this, "php-service-api", {
-            restApiName: "Php Service",
-            description: "This service is just a test with CDK and PHP."
+        const api = new apigateway.RestApi(this, "symfony-demo-gateway", {
+            restApiName: "Symfony Demo Application",
+            description: "This service is just a test with CDK and PHP and Symfony."
         });
 
         const serviceFrontControllerHandler = new apigateway.LambdaIntegration(handler, {
