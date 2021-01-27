@@ -24,15 +24,10 @@ export class SymfonyHandler extends cdk.Construct {
             memorySize: 1024
         });
 
-        const api = new apigateway.RestApi(this, "symfony-demo-gateway", {
-            restApiName: "symfony-demo-gateway",
+        const api = new apigateway.LambdaRestApi(this, "symfony-demo-gateway", {
+            handler,
+            restApiName: 'symfony-demo-app',
             description: "This service is just a test with CDK, PHP and Symfony."
         });
-
-        const serviceFrontControllerHandler = new apigateway.LambdaIntegration(handler, {
-            requestTemplates: { "application/json": '{ "statusCode": "200" }' }
-        });
-
-        api.root.addMethod("GET", serviceFrontControllerHandler);
     }
 }
